@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coffee Selection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/cart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../style/styles.css">
+</head>
+
+<body>
+
+<!-- VIDEO -->
+<video class="bg-video" autoplay muted loop playsinline>
+    <source src="../videos/BackGround_Coffee.mp4" type="video/mp4">
+</video>
+<div class="bg-overlay"></div>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="logo">Bean Boutique</div>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="coffee.html" class="active">Coffee</a>
+        <a href="equipment.html">Equipment</a>
+        <a href="community.html">Event</a>
+        <a href="contact.html">Contact</a>
+        <a href="Offers.html">Offers</a>
+    <a href="Login-Sign_up.html" class="login-icon">
+        <i class="fas fa-user"></i>
+    </a>
+        
+        <a href="cart.html" class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+        </a>
+    </nav>
+</header>
+
+<!-- COFFEE SECTION -->
+<section class="coffee-section">
+    <h1>Our Coffee Selection</h1>
+    <p>
+        Discover our carefully curated selection of single-origin coffees and
+        signature blends, each crafted to deliver a unique flavor experience.
+    </p>
+
+    <div class="coffee-grid">
+
+        <!-- Ethiopian -->
+        <div class="coffee-card reveal">
+            <img src="../images/Ethiopian_sunrise.jpg" class="coffee-img">
+
+            <h3 class="coffee-name">Ethiopian Sunrise</h3>
+
+            <p class="coffee-desc">
+                A bright, floral single-origin coffee from Ethiopia’s highlands. 
+                Bursting with citrus acidity and delicate jasmine aroma, this brew delivers a refreshing and elegant cup with layered complexity.
+            </p>
+
+            <div class="coffee-meta">
+                <span>TASTING NOTES</span>
+                <p>Citrus, jasmine, honey</p>
+            </div>
+
+            <div class="coffee-meta">
+                <span>RECOMMENDED BREW</span>
+                <p>Pour-over, Aeropress</p>
+            </div>
+
+            <p class="coffee-price">$18</p>
+            <button class="enroll-btn" onclick="addToCart('Ethiopian Sunrise', 18)">Add to Cart</button>
+        </div>
+
+        <!-- Midnight -->
+        <div class="coffee-card reveal">
+            <img src="../images/Midnight_roast.jpg" class="coffee-img">
+
+            <h3 class="coffee-name">Midnight Roast</h3>
+
+            <p class="coffee-desc">
+                A bold and intense dark roast crafted for deep flavor lovers. 
+                Rich in body with smoky undertones and a lingering cocoa finish, perfect for a powerful start to your day.
+            </p>
+
+            <div class="coffee-meta">
+                <span>TASTING NOTES</span>
+                <p>Dark chocolate, toasted nuts</p>
+            </div>
+
+            <div class="coffee-meta">
+                <span>RECOMMENDED BREW</span>
+                <p>Espresso, French press</p>
+            </div>
+
+            <p class="coffee-price">$20</p>
+            <button class="enroll-btn" onclick="addToCart('Midnight Roast', 20)">Add to Cart</button>
+        </div>
+
+        <!-- Colombian -->
+        <div class="coffee-card reveal">
+            <img src="../images/Colombian_classic.jpg" class="coffee-img">
+
+            <h3 class="coffee-name">Colombian Classic</h3>
+
+            <p class="coffee-desc">
+                A smooth and balanced Colombian coffee known for its comforting richness. 
+                Subtle sweetness with hints of caramel and fruit makes it an ideal everyday brew.
+            </p>
+
+            <div class="coffee-meta">
+                <span>TASTING NOTES</span>
+                <p>Caramel, red apple, cocoa</p>
+            </div>
+
+            <div class="coffee-meta">
+                <span>RECOMMENDED BREW</span>
+                <p>Drip coffee, Chemex</p>
+            </div>
+
+            <p class="coffee-price">$17</p>
+            <button class="enroll-btn" onclick="addToCart('Colombian Classic', 17)">Add to Cart</button>
+        </div>
+
+        <!-- Mocha -->
+        <div class="coffee-card reveal">
+            <img src="../images/Velvet.jpg" class="coffee-img">
+
+            <h3 class="coffee-name">Velvet Mocha Blend</h3>
+
+            <p class="coffee-desc">
+                A luxurious, dessert-like blend with velvety texture and natural chocolate sweetness. 
+                Perfectly crafted for creamy lattes and indulgent coffee moments.
+            </p>
+
+            <div class="coffee-meta">
+                <span>TASTING NOTES</span>
+                <p>Milk chocolate, vanilla, almond</p>
+            </div>
+
+            <div class="coffee-meta">
+                <span>RECOMMENDED BREW</span>
+                <p>Latte, Cappuccino</p>
+            </div>
+
+            <p class="coffee-price">$22</p>
+            <button class="enroll-btn" onclick="addToCart('Velvet Mocha Blend', 22)">Add to Cart</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-content">
+        <p class="footer-text">© 2026 Bean Boutique. Crafted with passion.</p>
+    </div>
+</footer>
+
+<!-- SCROLL REVEAL -->
+<script>
+const reveals = document.querySelectorAll(".reveal");
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        }
+    });
+}, { threshold: 0.15 });
+
+reveals.forEach(el => observer.observe(el));
+
+function updateCartCount() {
+    let cart = getCart();
+    document.querySelector(".cart-count").innerText = cart.length;
+}
+
+function addToCart(name, price) {
+    let cart = getCart();
+    cart.push({ name, price });
+    saveCart(cart);
+    updateCartCount();
+}
+
+updateCartCount();
+updateCartCount();
+</script>
+
+</body>
+</html>

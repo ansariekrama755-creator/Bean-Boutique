@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brewing Equipment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../style/styles.css">
+    <script src="../js/cart.js"></script>
+    <style>
+        /* ===== IMAGE FIX ===== */
+        .coffee-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= VIDEO BACKGROUND ================= -->
+    <video class="bg-video" autoplay muted loop playsinline>
+        <source src="../videos/Equipment.mp4" type="video/mp4">
+    </video>
+    <div class="bg-overlay"></div>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+        <div class="logo">Bean Boutique</div>
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="coffee.html">Coffee</a>
+            <a href="equipment.html" class="active">Equipment</a>
+            <a href="community.html">Event</a>
+            <a href="contact.html">Contact</a>
+            <a href="Offers.html">Offers</a>
+           <a href="Login-Sign_up.html" class="login-icon">
+        <i class="fas fa-user"></i>
+    </a>
+            <a href="cart.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- ================= EQUIPMENT SECTION ================= -->
+    <section class="coffee-section">
+        <h1>Brewing Equipment</h1>
+        <p>
+            Explore our premium range of brewing equipment, designed to help you craft
+            café-quality coffee at home with precision, consistency, and style.
+        </p>
+
+        <div class="coffee-grid">
+
+            <!-- Equipment 1 -->
+            <div class="coffee-card reveal">
+                <img src="../images/Espresso_machine.jpg" alt="Espresso Machine">
+
+                <h3 class="coffee-name">Espresso Machine</h3>
+                <p class="coffee-desc">
+                    Experience barista-level performance with a high-pressure espresso machine
+                    engineered for rich extraction, velvety crema, and consistent results.
+                    Perfect for crafting espresso-based drinks with professional precision.
+                </p>
+
+                <div class="coffee-meta">
+                    <span>BEST FOR</span>
+                    <p>Espresso, Cappuccino, Latte, Flat White</p>
+                </div>
+
+                <div class="coffee-meta">
+                    <span>USAGE TIP</span>
+                    <p>Preheat the machine and use freshly ground beans for maximum flavor extraction.</p>
+                </div>
+
+                <p class="coffee-price">$180</p>
+                <button class="enroll-btn" onclick="addToCart('Espresso Machine', 180)">Add to Cart</button>
+            </div>
+
+            <!-- Equipment 2 -->
+            <div class="coffee-card reveal">
+                <img src="../images/French_press.jpg" alt="French Press">
+
+                <h3 class="coffee-name">French Press</h3>
+                <p class="coffee-desc">
+                    A timeless brewing method known for delivering a bold, full-bodied cup.
+                    The immersion technique enhances natural oils and flavors, giving you a
+                    richer and more textured coffee experience.
+                </p>
+
+                <div class="coffee-meta">
+                    <span>BEST FOR</span>
+                    <p>Strong, rich, full-bodied coffee</p>
+                </div>
+
+                <div class="coffee-meta">
+                    <span>USAGE TIP</span>
+                    <p>Use coarse grounds and steep for 4 minutes before pressing slowly.</p>
+                </div>
+
+                <p class="coffee-price">$35</p>
+                <button class="enroll-btn" onclick="addToCart('French Press', 35)">Add to Cart</button>
+            </div>
+
+            <!-- Equipment 3 -->
+            <div class="coffee-card reveal">
+                <img src="../images/Dripper.jpg" alt="Pour Over">
+
+                <h3 class="coffee-name">Pour-Over Dripper</h3>
+                <p class="coffee-desc">
+                    Achieve ultimate control over your brewing process with a pour-over dripper.
+                    This method highlights delicate flavors and aromas, producing a clean,
+                    smooth, and well-balanced cup every time.
+                </p>
+
+                <div class="coffee-meta">
+                    <span>BEST FOR</span>
+                    <p>Clean, aromatic, and nuanced coffee</p>
+                </div>
+
+                <div class="coffee-meta">
+                    <span>USAGE TIP</span>
+                    <p>Pour slowly in circular motions to evenly saturate the coffee grounds.</p>
+                </div>
+
+                <p class="coffee-price">$28</p>
+                <button class="enroll-btn" onclick="addToCart('Pour-Over Dripper', 28)">Add to Cart</button>
+            </div>
+
+            <!-- Equipment 4 -->
+            <div class="coffee-card reveal">
+                <img src="../images/Manual.jpg" alt="Manual Grinder">
+
+                <h3 class="coffee-name">Manual Grinder</h3>
+                <p class="coffee-desc">
+                    Enjoy freshly ground coffee anywhere with a precision manual grinder.
+                    Designed for consistency and durability, it preserves aroma and allows
+                    you to customize grind size for any brewing method.
+                </p>
+
+                <div class="coffee-meta">
+                    <span>BEST FOR</span>
+                    <p>Travel, freshness, and grind control</p>
+                </div>
+
+                <div class="coffee-meta">
+                    <span>USAGE TIP</span>
+                    <p>Adjust grind size depending on your brewing method for optimal taste.</p>
+                </div>
+
+                <p class="coffee-price">$42</p>
+                <button class="enroll-btn" onclick="addToCart('Manual Grinder', 42)">Add to Cart</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2026 Bean Boutique. Brew with confidence.</p>
+        </div>
+    </footer>
+
+    <!-- ================= SCROLL REVEAL ================= -->
+    <script>
+        const reveals = document.querySelectorAll(".reveal");
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                }
+            });
+        }, { threshold: 0.15 });
+
+        reveals.forEach(el => observer.observe(el));
+    
+       function updateCartCount() {
+    let cart = getCart();
+    document.querySelector(".cart-count").innerText = cart.length;
+}
+
+function addToCart(name, price) {
+    let cart = getCart();
+    cart.push({ name: name, price: price });
+    saveCart(cart);
+    updateCartCount();
+}
+
+updateCartCount();
+    </script>
+
+</body>
+</html>

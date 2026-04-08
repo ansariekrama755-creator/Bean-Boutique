@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="../js/cart.js"></script>
+    <link rel="stylesheet" href="../style/styles.css">
+</head>
+
+<body class="cart">
+
+<video class="bg-video" autoplay muted loop playsinline>
+    <source src="../videos/cart4.mp4" type="video/mp4">
+</video>
+<div class="bg-overlay"></div>
+
+<section class="cart-section" style="text-align:center;">
+
+    <h1>Checkout</h1>
+
+    <div class="tab glass" style="max-width:400px; margin:auto;">
+        <h3>Select Payment Method</h3>
+
+        <button class="tab-add" onclick="show('cash')">Cash</button>
+        <button class="tab-add" onclick="show('upi')">UPI</button>
+        <button class="tab-add" onclick="show('card')">Card</button>
+
+        <div id="cash" class="pay">Cash on Delivery</div>
+
+        <div id="upi" class="pay" style="display:none;">
+            <div class="coupon-wrapper">
+                <input id="upiInput" class="coupon-input" placeholder="Enter UPI ID">
+            </div>
+        </div>
+
+        <div id="card" class="pay" style="display:none;">
+            <div class="coupon-wrapper">
+                <input id="cardNumber" class="coupon-input" placeholder="Card Number">
+            </div>
+            <br>
+            <div class="coupon-wrapper">
+                <input id="cvv" class="coupon-input" placeholder="CVV">
+            </div>
+        </div>
+
+        <br>
+        <button class="checkout-btn" onclick="placeOrder()">Place Order</button>
+    </div>
+
+</section>
+
+<script>
+let selectedMethod = "cash";
+
+function show(id){
+    selectedMethod = id;
+
+    document.querySelectorAll(".pay").forEach(d => d.style.display = "none");
+    document.getElementById(id).style.display = "block";
+}
+
+// ☕ BIG MODAL ALERT
+function showAlert(msg, type="success"){
+    const overlay = document.createElement("div");
+    overlay.className = "alert-overlay";
+
+    const box = document.createElement("div");
+    box.className = "alert-box " + type;
+
+    box.innerHTML = `
+        <p>${msg}</p>
+        <button onclick="this.parentElement.parentElement.remove()">OK</button>
+    `;
+
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+}
+
+// VALIDATIONS
+function validateUPI(upi){
+    return /^[\w.-]+@[\w]+$/.test(upi);
+}
+
+function validateCard(number, cvv){
+    return /^\d{12,19}$/.test(number) && /^\d{3}$/.test(cvv);
+}
+
+// PLACE ORDER
+function placeOrder(){
+
+    if(selectedMethod === "upi"){
+        const upi = document.getElementById("upiInput").value.trim();
+
+        if(!upi){
+            return showAlert("Enter UPI ID ❌", "error");
+        }
+
+        if(!validateUPI(upi)){
+            return showAlert("Invalid UPI format ", "error");
+        }
+    }
+
+    if(selectedMethod === "card"){
+        const number = document.getElementById("cardNumber").value.trim();
+        const cvv = document.getElementById("cvv").value.trim();
+
+        if(!number || !cvv){
+            return showAlert("Enter card details  ", "error");
+        }
+
+        if(!validateCard(number, cvv)){
+            return showAlert("Invalid card details ", "error");
+        }
+    }
+
+    // ✅ SUCCESS
+    showAlert("Order Placed Successfully! 🎉");
+
+    localStorage.removeItem("cart");
+
+    setTimeout(() => {
+        window.location.href = "cart.html";
+    }, 1500);
+}
+</script>
+
+</body>
+</html>

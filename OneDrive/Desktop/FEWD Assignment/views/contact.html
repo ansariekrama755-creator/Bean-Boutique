@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Us</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../style/styles.css">
+    <script src="../js/cart.js"></script>
+</head>
+
+<body>
+
+<!-- Background -->
+<video class="bg-video" autoplay muted loop playsinline>
+    <source src="../videos/contact.mp4" type="video/mp4">
+</video>
+<div class="bg-overlay"></div>
+
+<header class="navbar">
+    <div class="logo">Bean Boutique</div>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="coffee.html">Coffee</a>
+        <a href="equipment.html">Equipment</a>
+        <a href="community.html">Event</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="Offers.html">Offers</a>
+        <a href="Login-Sign_up.html" class="login-icon">
+        <i class="fas fa-user"></i>
+    </a>
+        <a href="cart.html" class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+        </a>
+    </nav>
+</header>
+
+<section class="contact-section">
+    <div class="contact-wrapper glass">
+
+        <h1>Get in Touch </h1>
+        <p class="contact-sub">Questions, feedback, or coffee talk — we’d love to hear from you.</p>
+
+        <form class="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <input type="text" placeholder="Subject">
+            <textarea rows="4" placeholder="Your Message" required></textarea>
+
+            <button type="submit" class="enroll-btn">Send Message</button>
+        </form>
+
+        <div class="contact-social">
+            <p>Connect with us</p>
+            <div class="social-icons">
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-whatsapp"></i>
+                <i class="fab fa-facebook"></i>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+document.querySelector(".contact-form").addEventListener("submit", e=>{
+    e.preventDefault();
+    alert("Message sent We'll reply soon!");
+});
+</script>
+
+</body>
+</html>

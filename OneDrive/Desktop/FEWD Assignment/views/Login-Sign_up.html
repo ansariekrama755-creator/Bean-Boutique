@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auth | Bean Boutique</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../style/styles.css">
+    <script src="../js/cart.js"></script>
+</head>
+
+<body class="auth-body">
+
+<header class="navbar">
+    <div class="logo">Bean Boutique</div>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="coffee.html">Coffee</a>
+        <a href="equipment.html">Equipment</a>
+        <a href="community.html">Event</a>
+        <a href="contact.html">Contact</a>
+        <a href="Offers.html">Offers</a>
+
+   <a href="#" class="login-icon active" onclick="switchForm('loginSection')">
+    <i class="fas fa-user"></i>
+</a>
+
+<!-- PROFILE ICON -->
+<div id="profileBox" class="profile hidden">
+    <div class="profile-circle" onclick="toggleProfileMenu()">
+        <i class="fas fa-user"></i>
+    </div>
+
+    <div class="profile-menu hidden" id="profileMenu">
+        <p onclick="window.location.href='profile.html'">My Profile</p>
+        <p onclick="logout()">Logout</p>
+    </div>
+</div>
+
+        <a href="cart.html" class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">2</span>
+        </a>
+    </nav>
+</header>
+
+<div class="auth-container">
+
+    <!-- LOGIN -->
+    <div id="loginSection" class="form-section active">
+        <h2>Welcome</h2>
+
+        <form id="loginForm">
+            <div class="auth-input">
+                <input type="email" placeholder="Email" required>
+                <i class="fas fa-envelope"></i>
+            </div>
+
+            <div class="auth-input">
+                <input type="password" placeholder="Password" required>
+                <i class="fas fa-eye toggle-password"></i>
+            </div>
+
+            <!-- CAPTCHA -->
+            <div class="auth-input">
+                <input type="text" id="loginCaptchaInput" placeholder="Enter CAPTCHA" required>
+            </div>
+            <p id="loginCaptchaText"></p>
+
+            <button class="enroll-btn">Login</button>
+        </form>
+
+        <div class="auth-extra">
+            <p>Don't have an account? 
+                <a href="#" onclick="switchForm('signupSection')">Sign up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- SIGNUP -->
+    <div id="signupSection" class="form-section">
+        <h2>Create Account</h2>
+
+        <form id="signupForm">
+            <div class="auth-input">
+                <input type="text" placeholder="Full Name" required>
+                <i class="fas fa-user"></i>
+            </div>
+
+            <div class="auth-input">
+                <input type="email" placeholder="Email" required>
+                <i class="fas fa-envelope"></i>
+            </div>
+
+            <div class="auth-input">
+                <input type="password" placeholder="Password" required>
+                <i class="fas fa-eye toggle-password"></i>
+            </div>
+
+            <div class="auth-input">
+                <input type="password" placeholder="Confirm Password" required>
+                <i class="fas fa-eye toggle-password"></i>
+            </div>
+
+            <!-- CAPTCHA -->
+            <div class="auth-input">
+                <input type="text" id="signupCaptchaInput" placeholder="Enter CAPTCHA" required>
+            </div>
+            <p id="signupCaptchaText"></p>
+
+            <button class="enroll-btn">Sign Up</button>
+        </form>
+
+        <div class="auth-extra">
+            <p>Already have an account? 
+                <a href="#" onclick="switchForm('loginSection')">Login</a>
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<!-- POPUP -->
+<div class="glass-popup hidden" id="popup">
+    <div class="glass-popup-content">
+        <p id="popupMsg"></p>
+        <button id="popupBtn">OK</button>
+    </div>
+</div>
+
+<script>
+function switchForm(sectionId) {
+    document.querySelectorAll(".form-section").forEach(sec => {
+        sec.classList.remove("active");
+    });
+    document.getElementById(sectionId).classList.add("active");
+}
+
+/* PASSWORD TOGGLE */
+document.querySelectorAll(".toggle-password").forEach(icon => {
+    icon.addEventListener("click", () => {
+        const input = icon.previousElementSibling;
+
+        input.type = "text";
+        icon.classList.replace("fa-eye", "fa-eye-slash");
+
+        setTimeout(() => {
+            input.type = "password";
+            icon.classList.replace("fa-eye-slash", "fa-eye");
+        }, 1500);
+    });
+});
+
+/* POPUP */
+const popup = document.getElementById("popup");
+const popupMsg = document.getElementById("popupMsg");
+const popupBtn = document.getElementById("popupBtn");
+
+function showPopup(message) {
+    popupMsg.textContent = message;
+    popup.classList.remove("hidden");
+}
+
+popupBtn.addEventListener("click", () => {
+    popup.classList.add("hidden");
+
+    if (popup.dataset.action === "goToLogin") {
+        popup.dataset.action = "";
+        switchForm("loginSection");
+    }
+
+    if (popup.dataset.action === "afterSignup") {
+        popup.dataset.action = "";
+        switchForm("loginSection");
+    }
+});
+
+/* CAPTCHA GENERATOR */
+let loginCaptcha = "";
+let signupCaptcha = "";
+
+function generateCaptcha(type){
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let captcha = "";
+
+    for(let i=0;i<6;i++){
+        captcha += chars[Math.floor(Math.random()*chars.length)];
+    }
+
+    if(type === "login"){
+        loginCaptcha = captcha;
+        document.getElementById("loginCaptchaText").textContent = "CAPTCHA: " + captcha;
+    } else {
+        signupCaptcha = captcha;
+        document.getElementById("signupCaptchaText").textContent = "CAPTCHA: " + captcha;
+    }
+}
+
+/* SIGNUP */
+const form = document.getElementById("signupForm");
+
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const captchaInput = document.getElementById("signupCaptchaInput").value;
+
+    if(captchaInput !== signupCaptcha){
+        showPopup("❌ Wrong CAPTCHA!");
+        generateCaptcha("signup");
+        return;
+    }
+
+    const name = form.querySelector("input[type='text']").value;
+    const email = form.querySelector("input[type='email']").value;
+    const password = form.querySelectorAll("input[type='password']")[0].value;
+    const confirmPassword = form.querySelectorAll("input[type='password']")[1].value;
+
+    const existingUser = JSON.parse(localStorage.getItem("user"));
+
+    if (existingUser && existingUser.email === email) {
+        showPopup("⚠️ Email already exists!\n\nPress OK to login.");
+        popup.dataset.action = "goToLogin";
+        return;
+    }
+
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+
+    if (password !== confirmPassword) {
+        showPopup("Passwords do not match!");
+        return;
+    }
+
+    if (!regex.test(password)) {
+        showPopup("Password must contain:\n• At least 8 characters\n• 1 uppercase\n• 1 lowercase\n• 1 special character");
+        return;
+    }
+
+    const code = "BEAN" + Math.floor(1000 + Math.random() * 9000);
+
+    const user = {
+        name,
+        email,
+        password,
+        discountCode: code,
+        used: false
+    };
+
+    localStorage.setItem("user", JSON.stringify(user));
+
+    showPopup("🎉 Account created!\n\nYour code: " + code);
+    popup.dataset.action = "afterSignup";
+});
+
+/* LOGIN */
+const loginForm = document.getElementById("loginForm");
+
+loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const captchaInput = document.getElementById("loginCaptchaInput").value;
+
+    if(captchaInput !== loginCaptcha){
+        showPopup("❌ Wrong CAPTCHA!");
+        generateCaptcha("login");
+        return;
+    }
+
+    const email = loginForm.querySelector("input[type='email']").value;
+    const password = loginForm.querySelector("input[type='password']").value;
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user || user.email !== email || user.password !== password) {
+        showPopup("Invalid credentials!");
+        return;
+    }
+
+    localStorage.setItem("loggedIn", "true");
+    window.location.href = "home.html";
+});
+
+/* INIT */
+window.addEventListener("load", () => {
+    generateCaptcha("login");
+    generateCaptcha("signup");
+
+    const loggedIn = localStorage.getItem("loggedIn") === "true";
+
+    if (loggedIn) {
+        window.location.href = "profile.html";
+    }
+});
+</script>
+
+<!-- ✅ GLOBAL AUTH -->
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

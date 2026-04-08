@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Profile | Bean Boutique</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="../style/styles.css">
+
+<script src="../js/cart.js"></script>
+</head>
+
+<body class="Profile">
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="logo">Bean Boutique</div>
+
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="coffee.html">Coffee</a>
+        <a href="equipment.html">Equipment</a>
+        <a href="community.html">Event</a>
+        <a href="contact.html">Contact</a>
+        <a href="Offers.html">Offers</a>
+
+        <!-- ✅ PROFILE ICON ALWAYS -->
+        <a href="Profile.html" class="login-icon active">
+    <i class="fas fa-user"></i>
+</a>
+
+        <!-- CART -->
+        <a href="cart.html" class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+        </a>
+    </nav>
+</header>
+
+<!-- PROFILE -->
+<section class="profile-page">
+
+    <div class="profile-page-card">
+
+        <!-- LEFT -->
+        <div class="profile-page-left">
+            <div class="profile-page-avatar">
+                <img id="avatarPreview" src="../images/user.png" alt="User">
+            </div>
+
+            <h3 id="displayName">User</h3>
+            <p id="displayEmail">email@example.com</p>
+
+            <button class="enroll-btn edit-btn" onclick="toggleEdit()">
+                Edit Profile
+            </button>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="profile-page-right">
+
+            <h2>Account Details</h2>
+
+            <div class="profile-group">
+                <label>Name</label>
+                <input id="name" type="text" disabled>
+            </div>
+
+            <div class="profile-group">
+                <label>Email</label>
+                <input id="email" type="email" disabled>
+            </div>
+
+            <div class="profile-group">
+                <label>New Password</label>
+                <input id="password" type="password" placeholder="Enter new password" disabled>
+            </div>
+
+            <div class="profile-group">
+                <label>Confirm Password</label>
+                <input id="confirmPassword" type="password" placeholder="Confirm password" disabled>
+            </div>
+
+            <button class="enroll-btn save-btn hidden" id="saveBtn" onclick="saveProfile()">
+                Save Changes
+            </button>
+
+            <div class="profile-btn-row">
+    <button class="enroll-btn logout-btn" onclick="logout()">
+        Logout
+    </button>
+
+    <button class="enroll-btn delete-btn" onclick="openDeleteModal()">
+        Delete Account
+    </button>
+</div>
+        </div>
+    </div>
+
+</section>
+
+<!-- ✅ GLASS MODAL -->
+<div id="errorModal" class="modal hidden">
+    <div class="modal-box">
+        <p id="modalMessage"></p>
+        <button class="enroll-btn" onclick="closeModal()">OK</button>
+    </div>
+</div>
+
+
+<script>
+// 🔐 AUTH CHECK
+if(!localStorage.getItem("loggedIn")){
+    window.location.href = "Login-Sign_up.html";
+}
+
+// 👤 USER DATA
+let user = JSON.parse(localStorage.getItem("user") || "{}");
+
+// DISPLAY DATA
+document.getElementById("displayName").innerText = user.name || "User";
+document.getElementById("displayEmail").innerText = user.email || "";
+
+document.getElementById("name").value = user.name || "";
+document.getElementById("email").value = user.email || "";
+
+// ✏️ EDIT MODE
+function toggleEdit(){
+    document.querySelectorAll(".profile-page-right input").forEach(i => i.disabled = false);
+    document.getElementById("saveBtn").classList.remove("hidden");
+}
+
+// 💾 SAVE PROFILE
+function saveProfile(){
+    const oldEmail = user.email;
+
+    const newName = document.getElementById("name").value;
+    const newEmail = document.getElementById("email").value;
+
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if(password){
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+
+        if(!regex.test(password)){
+            showModal("Password must have 8 chars, 1 small, 1 capital, 1 special ❌");
+            return;
+        }
+
+        if(password !== confirmPassword){
+            showModal("Passwords do not match ❌");
+            return;
+        }
+
+        user.password = password;
+    }
+
+    user.name = newName;
+    user.email = newEmail;
+
+    localStorage.setItem("user", JSON.stringify(user));
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    users = users.map(u => {
+        if(u.email === oldEmail){
+            return {
+                ...u,
+                name: newName,
+                email: newEmail,
+                password: user.password || u.password
+            };
+        }
+        return u;
+    });
+
+    localStorage.setItem("users", JSON.stringify(users));
+
+    showModal("Profile updated successfully ✅");
+}
+
+// MODAL
+function showModal(message){
+    document.getElementById("modalMessage").innerText = message;
+    document.getElementById("errorModal").classList.remove("hidden");
+}
+
+function closeModal(){
+    document.getElementById("errorModal").classList.add("hidden");
+
+    // ✅ ADDED LOGIC (ONLY CHANGE)
+    document.querySelectorAll(".profile-page-right input").forEach(i => i.disabled = true);
+    document.getElementById("saveBtn").classList.add("hidden");
+
+    // clear password fields
+    document.getElementById("password").value = "";
+    document.getElementById("confirmPassword").value = "";
+}
+
+// LOGOUT
+function logout(){
+    localStorage.removeItem("loggedIn");
+    window.location.href = "home.html";
+}
+function openDeleteModal(){
+    document.getElementById("deleteModal").classList.remove("hidden");
+}
+
+function closeDeleteModal(){
+    document.getElementById("deleteModal").classList.add("hidden");
+}
+
+function confirmDelete(){
+    localStorage.removeItem("user");
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("cart");
+
+    closeDeleteModal();
+
+    showModal("Account deleted successfully ✅");
+
+    setTimeout(() => {
+        window.location.href = "Login-Sign_up.html";
+    }, 1200);
+}
+</script>
+<div class="modal hidden" id="deleteModal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeDeleteModal()">&times;</span>
+
+        <h2>Delete Account</h2>
+        <p>Are you sure you want to delete your account? This cannot be undone.</p>
+        <br>
+
+        <button class="checkout-btn" onclick="confirmDelete()">Yes, Delete</button>
+        <br><br>
+        <button class="tab-add" onclick="closeDeleteModal()">Cancel</button>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Community – Events & Workshops</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../style/styles.css">
+    <script src="../js/cart.js"></script>
+</head>
+
+<body>
+
+    <!-- VIDEO -->
+    <video class="bg-video" autoplay muted loop playsinline>
+        <source src="../videos/Events.mp4" type="video/mp4">
+    </video>
+    <div class="bg-overlay"></div>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="logo">Bean Boutique</div>
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="coffee.html">Coffee</a>
+            <a href="equipment.html">Equipment</a>
+            <a href="community.html" class="active">Event</a>
+            <a href="contact.html">Contact</a>
+            <a href="Offers.html">Offers</a>
+            <a href="Login-Sign_up.html" class="login-icon">
+        <i class="fas fa-user"></i>
+    </a>
+            <a href="cart.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">2</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- EVENTS -->
+    <section class="coffee-section">
+        <h1>Community Events & Workshops</h1>
+        <p>
+            Join our upcoming coffee events and hands-on workshops designed
+            to bring our community together and enhance brewing skills.
+        </p>
+
+        <div class="coffee-grid">
+
+            <!-- EVENT 1 -->
+            <div class="coffee-card reveal">
+                <h3 class="coffee-name">Espresso Brewing Workshop</h3>
+                <p class="coffee-desc">
+                    Learn espresso extraction techniques, milk steaming,
+                    and how to dial in the perfect shot.
+                </p>
+
+                <div class="coffee-meta">
+                    <span>DATE</span>
+                    <p>15 March 2026</p>
+                </div>
+
+                <div class="coffee-meta">
+                    <span>LOCATION</span>
+                    <p>Bean Boutique Studio</p>
+                    <br>
+                </div>
+
+                <button onclick="enrollEvent('Espresso Brewing Workshop', this)" class="enroll-btn">Enroll Now</button>
+                <p class="enrolled-label" style="display:none; color:#4CAF50;">• Enrolled</p>
+            </div>
+
+            <!-- EVENT 2 -->
+            <div class="coffee-card reveal">
+                <h3 class="coffee-name">Home Brewing Masterclass</h3>
+                <p class="coffee-desc">
+                    A practical session covering pour-over, French press,
+                    and Aeropress brewing methods.
+                </p>
+
+                <div class="coffee-meta">
+                    <span>DATE</span>
+                    <p>28 March 2026</p>
+                </div>
+
+                <div class="coffee-meta">
+                    <span>LOCATION</span>
+                    <p>Bean Boutique Lab</p>
+                    <br>
+                </div>
+
+                <button onclick="enrollEvent('Home Brewing Masterclass', this)" class="enroll-btn">Enroll Now</button>
+                <p class="enrolled-label" style="display:none; color:#4CAF50;">• Enrolled</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- REGISTER -->
+    <section class="coffee-section" id="register">
+        <h1>Register for an Event</h1>
+        <p>Fill in the form below to register.</p>
+
+        <div class="coffee-grid">
+            <div class="coffee-card reveal">
+
+                <form id="regForm" action="mailto:events@beanboutique.com" method="post" enctype="text/plain">
+
+                    <div class="coffee-meta">
+                        <span>FIRST NAME</span>
+                        <input type="text" name="First Name" required>
+                    </div>
+
+                    <div class="coffee-meta">
+                        <span>LAST NAME</span>
+                        <input type="text" name="Last Name" required>
+                    </div>
+
+                    <div class="coffee-meta">
+                        <span>EMAIL ADDRESS</span>
+                        <input type="email" name="Email" required>
+                    </div>
+
+                    <!-- NEW FIELD -->
+                    <div class="coffee-meta">
+                        <span>EVENT</span>
+                        <input type="text" id="eventField" required>
+                    </div>
+
+                    <button type="submit" class="enroll-btn">Submit Registration</button>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2026 Bean Boutique. Learn. Brew. Connect.</p>
+        </div>
+    </footer>
+    <div id="successPopup" class="glass-popup hidden">
+    <div class="glass-popup-content">
+        <h3>Enrollment Successful</h3>
+        <p>You’ve been registered for the event.</p>
+        <button onclick="closePopup()">Nice!</button>
+    </div>
+</div>
+
+<script>
+    /* ================= SCROLL REVEAL ================= */
+    const reveals = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+            }
+        });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(el => observer.observe(el));
+
+
+    /* ================= ENROLL LOGIC ================= */
+    let selectedButton = null;
+
+    function enrollEvent(eventName, btn) {
+
+        // remove active state from all buttons
+        document.querySelectorAll(".enroll-btn").forEach(b => {
+            b.classList.remove("active");
+        });
+
+        // add active state
+        btn.classList.add("active");
+
+        selectedButton = btn;
+
+        // fill event field
+        document.getElementById("eventField").value = eventName;
+
+        // scroll to form
+        document.getElementById("register").scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+    document.getElementById("regForm").addEventListener("submit", function (e) {
+        e.preventDefault(); // ❗ stop page reload / mail popup
+
+        if (selectedButton) {
+            // hide button
+            selectedButton.style.display = "none";
+
+            // show enrolled label
+            const label = selectedButton.nextElementSibling;
+            label.style.display = "block";
+        }
+
+        // show glass popup
+        document.getElementById("successPopup").classList.remove("hidden");
+    });
+
+
+    /* ================= POPUP CONTROL ================= */
+    function closePopup() {
+        document.getElementById("successPopup").classList.add("hidden");
+    }
+</script>
+
+</body>
+</html>

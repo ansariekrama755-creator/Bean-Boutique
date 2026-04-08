@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Special Offers & Subscriptions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="../style/styles.css">
+    <script src="../js/cart.js"></script>
+</head>
+
+<body class="Offer_body">
+
+
+<div class="bg-overlay"></div>
+
+<!-- NAVBAR (same as your site) -->
+<header class="navbar">
+    <h2>Bean Boutique</h2>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="coffee.html">Coffee</a>
+        <a href="equipment.html">Equipment</a>
+        <a href="community.html">Event</a>
+        <a href="contact.html">Contact</a>
+        <a href="Offers.html" class="active">Offers</a>
+       <a href="Login-Sign_up.html" class="login-icon">
+        <i class="fas fa-user"></i>
+    </a>
+
+        <a href="cart.html" class="cart-icon">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-count">0</span>
+        </a>
+    </nav>
+</header>
+
+<!-- ================= MAIN ================= -->
+<section class="coffee-section">
+
+    <h1>Special Offers & Subscriptions</h1>
+    <p>Enjoy exclusive deals and get fresh coffee delivered to your doorstep.</p>
+
+    <!-- ================= OFFERS ================= -->
+    <div class="coffee-grid">
+
+        <div class="coffee-card">
+            <h3 class="coffee-name">Buy 1 Get 1 Free</h3>
+            <p class="coffee-desc">Available every Friday on selected blends.</p>
+        </div>
+
+        <div class="coffee-card">
+            <h3 class="coffee-name"> 20% OFF</h3>
+            <p class="coffee-desc">Use code <b>WELCOME20</b> on your first order.</p>
+        </div>
+
+        <div class="coffee-card">
+            <h3 class="coffee-name"> Free Sample</h3>
+            <p class="coffee-desc">Get a free sample pack on orders above ₹999.</p>
+        </div>
+
+        <div class="coffee-card">
+            <h3 class="coffee-name"> Free Delivery</h3>
+            <p class="coffee-desc">On all prepaid orders across India.</p>
+        </div>
+
+    </div>
+
+    <!-- ================= SUBSCRIPTIONS ================= -->
+    <h1 style="margin-top:60px;">Subscription Plans</h1>
+
+    <div class="coffee-grid">
+
+        <!-- Basic -->
+        <div class="coffee-card">
+            <h3 class="coffee-name">Basic Brew</h3>
+            <p class="coffee-price">$45/month</p>
+            <p class="coffee-desc">
+                ✔ 250g monthly<br>
+                ✔ Choose your blend<br>
+                ✔ Free delivery<br>
+                ✔ Cancel anytime
+            </p>
+            <button class="enroll-btn">Subscribe</button>
+        </div>
+
+        <!-- Daily -->
+        <div class="coffee-card">
+            <h3 class="coffee-name">Daily Drip</h3>
+            <p class="coffee-price">$99/month</p>
+            <p class="coffee-desc">
+                ✔ 500g (2 deliveries)<br>
+                ✔ Seasonal blends<br>
+                ✔ Priority roasting<br>
+                ✔ 10% discount
+            </p>
+            <button class="enroll-btn">Subscribe</button>
+        </div>
+
+        <!-- Premium -->
+        <div class="coffee-card">
+            <h3 class="coffee-name">Premium Roast </h3>
+            <p class="coffee-price">$199/month</p>
+            <p class="coffee-desc">
+                ✔ 1kg weekly<br>
+                ✔ Premium beans<br>
+                ✔ Early access<br>
+                ✔ 15% discount<br>
+                ✔ Free goodies
+            </p>
+            <button class="enroll-btn">Subscribe</button>
+        </div>
+
+    </div>
+
+    <!-- ================= WHY ================= -->
+    <div class="features" style="margin-top:60px;">
+
+        <div class="feature-card">
+            <i class="fa-solid fa-clock"></i>
+            <h3>Never Run Out</h3>
+            <p>Always have fresh coffee ready.</p>
+        </div>
+
+        <div class="feature-card">
+            <i class="fa-solid fa-leaf"></i>
+            <h3>Fresh Beans</h3>
+            <p>Freshly roasted for maximum flavor.</p>
+        </div>
+
+        <div class="feature-card">
+            <i class="fa-solid fa-coins"></i>
+            <h3>Save More</h3>
+            <p>Better value than one-time purchases.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-content">
+        <p class="footer-text">© 2026 Bean Boutique. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+    </div>
+</footer>
+<!-- ===== SUBSCRIPTION POPUP ===== -->
+<div id="subPopup" class="modal hidden">
+  <div class="modal-content glass">
+
+    <span class="close-modal" onclick="closeSubPopup()">&times;</span>
+    <h2>Select Payment Method</h2>
+
+    <!-- CARD -->
+    <div class="payment-option" onclick="showSubPayment('card')">
+      <div class="pay-left">
+        <i class="fas fa-credit-card"></i>
+        <div>
+          <h4>Credit / Debit Card</h4>
+          <p>Visa, Mastercard, RuPay, Amex</p>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </div>
+
+    <div id="sub-card" class="pay hidden">
+      <input id="subCardNumber" class="coupon-input" placeholder="Card Number">
+
+      <div style="display:flex; gap:10px;">
+        <input id="subExpiry" class="coupon-input" placeholder="MM/YY">
+        <input id="subCVV" class="coupon-input" placeholder="CVV">
+      </div>
+
+      <input id="subCardName" class="coupon-input" placeholder="Name on Card">
+      <input id="subCardCaptchaInput" class="coupon-input" placeholder="Enter CAPTCHA">
+      <p id="subCardCaptchaText"></p>
+    </div>
+
+    <!-- UPI -->
+    <div class="payment-option" onclick="showSubPayment('upi')">
+      <div class="pay-left">
+        <i class="fas fa-mobile-alt"></i>
+        <div>
+          <h4>UPI / QR Code</h4>
+          <p>Google Pay, PhonePe, Paytm, BHIM</p>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </div>
+
+    <div id="sub-upi" class="pay hidden">
+      <input id="subUpi" class="coupon-input" placeholder="name@upi">
+
+      <div class="upi-qr-box">
+    <div class="qr-icon">
+        <i class="fas fa-qrcode"></i>
+    </div>
+
+    <img 
+      src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=beanboutique@okhdfcbank&pn=BeanBoutique&cu=INR"
+      class="upi-qr-img">
+
+    <p class="qr-text">Scan QR code with any UPI app</p>
+</div>
+
+      <input id="subUpiCaptchaInput" class="coupon-input" placeholder="Enter CAPTCHA">
+      <p id="subUpiCaptchaText"></p>
+    </div>
+
+    <!-- NET BANKING -->
+    <div class="payment-option" onclick="showSubPayment('netbanking')">
+      <div class="pay-left">
+        <i class="fas fa-university"></i>
+        <div>
+          <h4>Net Banking</h4>
+          <p>All major banks supported</p>
+        </div>
+      </div>
+      <i class="fas fa-chevron-right"></i>
+    </div>
+
+    <div id="sub-netbanking" class="pay hidden">
+      <div class="custom-dropdown">
+        <div class="dropdown-selected" onclick="toggleSubDropdown()">
+          Select your bank <i class="fas fa-chevron-down"></i>
+        </div>
+
+        <div class="dropdown-options hidden" id="subBankOptions">
+          <div onclick="selectSubBank(this)">State Bank of India</div>
+          <div onclick="selectSubBank(this)">HDFC Bank</div>
+          <div onclick="selectSubBank(this)">ICICI Bank</div>
+          <div onclick="selectSubBank(this)">Axis Bank</div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <button class="checkout-btn" onclick="completeSubscription()">Pay Now</button>
+
+  </div>
+</div>
+
+<!-- ===== RESULT MODAL ===== -->
+<div id="subResultModal" class="modal hidden">
+  <div class="modal-content glass">
+    <h2 id="subResultTitle"></h2>
+    <p id="subResultMsg"></p>
+    <br>
+    <button onclick="closeSubResult()">OK</button>
+  </div>
+</div>
+
+<script>
+let selectedSubMethod = "";
+let currentBtn = null;
+
+let subCardCaptcha = "";
+let subUpiCaptcha = "";
+
+/* OPEN */
+document.querySelectorAll(".enroll-btn").forEach(btn=>{
+  btn.addEventListener("click", function(){
+
+    if(localStorage.getItem("loggedIn") !== "true"){
+        showSubResult(
+          "Please login first to subscribe 🔐",
+          "Login Required",
+          true
+        );
+        return;
+    }
+
+    currentBtn = this;
+    document.getElementById("subPopup").classList.remove("hidden");
+  });
+});
+
+/* CLOSE */
+function closeSubPopup(){
+  document.getElementById("subPopup").classList.add("hidden");
+}
+
+/* SHOW PAYMENT */
+function showSubPayment(id){
+  selectedSubMethod = id;
+
+  document.querySelectorAll("#subPopup .pay").forEach(d=>d.classList.add("hidden"));
+  document.getElementById("sub-"+id).classList.remove("hidden");
+
+  if(id === "card") generateSubCaptcha("card");
+  if(id === "upi") generateSubCaptcha("upi");
+}
+
+/* CAPTCHA */
+function generateSubCaptcha(type){
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let captcha = "";
+
+  for(let i=0;i<6;i++){
+    captcha += chars[Math.floor(Math.random()*chars.length)];
+  }
+
+  if(type==="card"){
+    subCardCaptcha = captcha;
+    document.getElementById("subCardCaptchaText").innerText="CAPTCHA: "+captcha;
+  } else {
+    subUpiCaptcha = captcha;
+    document.getElementById("subUpiCaptchaText").innerText="CAPTCHA: "+captcha;
+  }
+}
+
+/* VALIDATION */
+function validateCard(num, cvv, exp){
+  const cardValid = /^\d{16}$/.test(num);
+  const cvvValid = /^\d{3}$/.test(cvv);
+  const expValid = /^(0[1-9]|1[0-2])\/\d{2}$/.test(exp);
+  return cardValid && cvvValid && expValid;
+}
+
+function validateUPI(upi){
+  return /^[a-zA-Z0-9._-]{2,}@[a-zA-Z]{2,}$/.test(upi);
+}
+
+function showSubResult(msg, title, redirect=false){
+  document.getElementById("subResultTitle").innerText = title;
+  document.getElementById("subResultMsg").innerText = msg;
+  document.getElementById("subResultModal").classList.remove("hidden");
+
+  const btn = document.querySelector("#subResultModal button");
+
+  btn.onclick = () => {
+    closeSubResult();
+
+    if(redirect){
+      window.location.href = "Login-Sign_up.html";
+    }
+  };
+}
+
+function closeSubResult(){
+  document.getElementById("subResultModal").classList.add("hidden");
+}
+
+/* NET BANK */
+function toggleSubDropdown(){
+  document.getElementById("subBankOptions").classList.toggle("hidden");
+}
+
+function selectSubBank(el){
+  const dropdown = document.getElementById("subBankOptions");
+
+  document.querySelector("#subPopup .dropdown-selected").innerHTML =
+    el.innerText + ' <i class="fas fa-chevron-down"></i>';
+
+  // ✅ CLOSE DROPDOWN AFTER SELECT
+  dropdown.classList.add("hidden");
+}
+
+/* MAIN PAYMENT */
+function completeSubscription(){
+
+  if(selectedSubMethod === ""){
+    return showSubResult("Select payment method ❌","Error");
+  }
+
+  /* CARD */
+  if(selectedSubMethod === "card"){
+    let num = document.getElementById("subCardNumber").value.trim();
+    let cvv = document.getElementById("subCVV").value.trim();
+    let exp = document.getElementById("subExpiry").value.trim();
+    let captcha = document.getElementById("subCardCaptchaInput").value;
+
+    if(!validateCard(num,cvv,exp)){
+      return showSubResult("Invalid card details ❌","Error");
+    }
+
+    if(captcha !== subCardCaptcha){
+      generateSubCaptcha("card");
+      return showSubResult("Wrong CAPTCHA ❌ (New generated)","Error");
+    }
+  }
+
+  /* UPI */
+  if(selectedSubMethod === "upi"){
+    let upi = document.getElementById("subUpi").value.trim();
+    let captcha = document.getElementById("subUpiCaptchaInput").value;
+
+    if(!validateUPI(upi)){
+      return showSubResult("Invalid UPI ID ❌","Error");
+    }
+
+    if(captcha !== subUpiCaptcha){
+      generateSubCaptcha("upi");
+      return showSubResult("Wrong CAPTCHA ❌ (New generated)","Error");
+    }
+  }
+
+  /* NET BANKING */
+  if(selectedSubMethod === "netbanking"){
+    let selected = document.querySelector("#subPopup .dropdown-selected").innerText;
+    if(selected.includes("Select")){
+      return showSubResult("Select a bank ❌","Error");
+    }
+  }
+
+  /* SUCCESS */
+  closeSubPopup();
+  showSubResult("Subscription Activated Successfully 🎉","Success");
+
+let user = JSON.parse(localStorage.getItem("user"));
+
+if(user && currentBtn){
+    const card = currentBtn.closest(".coffee-card");
+    const planName = card.querySelector(".coffee-name").innerText;
+
+    user.subscribedPlan = planName;
+    localStorage.setItem("user", JSON.stringify(user));
+}
+
+/* Replace button with text */
+if(currentBtn){
+    const text = document.createElement("div");
+    text.className = "subscribed-text";
+    text.innerText = "Subscribed";
+
+    currentBtn.replaceWith(text);
+}
+}
+function loadSubscriptionState(){
+    let user = JSON.parse(localStorage.getItem("user"));
+
+    if(user && user.subscribedPlan){
+
+        document.querySelectorAll(".coffee-card").forEach(card => {
+
+            const name = card.querySelector(".coffee-name").innerText;
+            const btn = card.querySelector(".enroll-btn");
+
+            if(!btn) return;
+
+            if(name === user.subscribedPlan){
+                const text = document.createElement("div");
+                text.className = "subscribed-text";
+                text.innerText = "Subscribed";
+
+                btn.replaceWith(text);
+            }
+        });
+    }
+}
+
+loadSubscriptionState();
+</script>
+
+</body>
+</html>
